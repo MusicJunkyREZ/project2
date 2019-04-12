@@ -1,0 +1,22 @@
+{
+  "name": "handlebars-boilerplate",
+  "version": "1.0.0",
+  "description": "Project 2 Starter",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3",
+    "express-handlebars": "^3.0.0",
+    "mysql2": "^1.6.4",
+    "sequelize": ">=5.3.0"
+  },
+  "devDependencies": {
+    "cross-env": "^5.2.0",
+    "prettier": "^1.13.7"
+  },
+  "author": ""
+}
