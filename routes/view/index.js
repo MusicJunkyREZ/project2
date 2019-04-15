@@ -3,15 +3,26 @@ var db = require("../../models");
 
 // This route renders the homepage
 router.get("/", function (req, res) {
-    db.Post.findAll({}).then(function(posts) {
+    db.Post.findAll().then(function(posts) {
         res.render("index");
+
+      
     });
 });
-
+router.get("/api/post", function(req, res){
+    db.Post.findAll().then(function(posts){
+        res.json(posts);
+    })
+    
+})
 // This is a placeholder/test page
 router.get("/test", function (req, res){
+    db.Post.findAll().then(function(posts) {
     res.render("test");
-})
+});
+});
+
+
 
 // This route renders the individual post page
 // router.get("/post/:id", function(req, res) {

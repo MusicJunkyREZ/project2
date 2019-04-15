@@ -2,9 +2,10 @@ var router = require("express").Router();
 var controller = require("../../controllers/controller.js");
 
 // Matches with "/api/posts"
-router.route("/posts")
+router.route("/post")
   .get(controller.findAll)
-  .post(controller.create);
+  .post(controller.create)
+  .put(controller.update);
 
 // Matches with "/api/posts/:id"
 router.route("/posts/:id")

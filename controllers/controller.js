@@ -20,5 +20,15 @@ module.exports = {
         db.Post.destroy({ where: { id: req.params.id } }).then(function (deletedPost) {
             res.json(deletedPost);
         });
+    },
+    update: function (req, res) {
+        db.Post.update({quantity: req.body.quantity},
+            {
+                where: {id: req.body.id}
+                
+            }).then(function(updated) {
+            res.json(updated);
+            console.log("1");
+        })
     }
 };
