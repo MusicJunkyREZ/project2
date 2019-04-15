@@ -22,6 +22,11 @@ router.get("/test", function (req, res){
 //     });
 // });
 
+// This route renders the signup page
+router.get("/signup", function(req, res){
+    res.render("signup")
+})
+
 // This route renders the 404
 router.get("*", function (req, res) {
     res.render("404");
