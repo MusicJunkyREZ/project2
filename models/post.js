@@ -1,8 +1,19 @@
+
+
 module.exports = function(sequelize, DataTypes) {
     var Post = sequelize.define("Post", {
-      text: DataTypes.STRING,
-      description: DataTypes.TEXT
-    });
+      product_name: DataTypes.STRING,
+      category: DataTypes.STRING,
+      quantity: DataTypes.INTEGER,
+      userId: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      }
+    },
+    {
+      timestamps: false
+    }
+  );
     return Post;
   };
   
