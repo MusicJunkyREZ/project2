@@ -1,5 +1,28 @@
+*  {
+  background: red;
+}
+
 .list-group-item {
     line-height: 2.5;
   }
   
-  
+ #piggyWrapper{
+   background: #25274D;
+ }
+
+ h2 {
+   padding-top: 100px;
+ }
+
+ img {
+   width: 600px;
+   height: auto;
+ }
+
+ #submit.log-in.btb{
+   background: #2E9CCA;
+ }
+
+ #sign-up-btn{
+  background-color: #2E9CCA;
+ }
