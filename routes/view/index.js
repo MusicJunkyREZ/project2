@@ -23,21 +23,17 @@ router.get("/test", function (req, res){
 });
 
 
-
-// This route renders the individual post page
-// router.get("/post/:id", function(req, res) {
-//     db.Post.findOne({ where: { id: req.params.id } }).then(function(newPost) {
-//         res.render("post", {
-//             post: newPost
-//         });
-//     });
-// });
-
 // This route renders the signup page
 router.get("/signup", function(req, res){
     res.render("signup")
 })
 
+router.get("/newUser", function(req, res) {
+    res.render("newUser")
+})
+router.get("/confirm", function(req, res) {
+    res.render("confirm")
+})
 // This route renders the 404
 router.get("*", function (req, res) {
     res.render("404");
