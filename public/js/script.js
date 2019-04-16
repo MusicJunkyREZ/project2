@@ -1,13 +1,23 @@
+var imgs = ["https://i.imgur.com/H95Y1Eu.jpg", "https://i.imgur.com/ipAkG5n.jpg", "https://i.imgur.com/3EyFOWx.jpg","https://i.imgur.com/xBgM0k4.jpg","https://i.imgur.com/myYS2sh.jpg","https://i.imgur.com/F88Tfj7.jpg","https://i.imgur.com/zaGLLTC.jpg","https://i.imgur.com/FZqI7nj.jpg","https://i.imgur.com/xQbXeqJ.jpg","https://i.imgur.com/78ytynN.jpg","https://i.imgur.com/NYUcfcG.jpg","https://i.imgur.com/x3dO5PE.jpg","https://i.imgur.com/E5FKzqn.jpg"];
+var imgURL = imgs[Math.floor(imgs.length * Math.random())];
+
+
 
 $(document).ready(function() {
 // Get references to page elements
+
 var $postText = $("#post-text");
 var $postDescription = $("#post-description");
 var $submitBtn = $("#submit");
 var $postList = $("#post-list");
+
 $(document).on("click", ".delete", deleteProduct);
 $(document).on("click", ".increase", increaseProduct);
 $(document).on("click", ".decrease", decreaseProduct);
+
+$("#img-gallery").attr("src", imgURL);
+$("#load-logo").attr("src", "https://i.imgur.com/8qNyPIY.png");
+
 // The API object contains methods for each kind of request we'll make
 var API = {
   savepost: function(post) {
@@ -31,8 +41,14 @@ var API = {
       url: "api/posts/" + id,
       type: "DELETE"
     });
-  }
-};
+  }};
+
+
+
+$(document).click(function (event) { 
+  $('.hide').fadeOut();           
+  $('.show').fadeIn("slow");  
+});
 
 // refreshposts gets new posts from the db and repopulates the list
 function refreshPosts() {
@@ -104,6 +120,7 @@ function increaseProduct(event){
   });
 
 }
+
  function updateQuantity(posts) {
    console.log("whoo");
    $.ajax({
@@ -124,22 +141,3 @@ function decreaseProduct(event) {
 }
 
 });
-
-// function decreaseProduct(event){
-//   event.stopPropagation();
-//   var id = $(this).data("id");
-//   console.log("ID:" + id);
-//   console.log(posts);
-//   $.get("/api/post", function(data) {
-//     for (var i = 0; i < posts.length; i++) {
-//       // console.log("This" + posts[i].id);
-//      if (id === posts[i].id) {
-//         posts[i].quantity --;
-//         console.log(posts[i].quantity);
-//         console.log(posts[i]);
-//         updateQuantity(posts[i]);
-//         return;
-
-//      } 
-//     }
-//   });

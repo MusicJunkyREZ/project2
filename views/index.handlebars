@@ -9,17 +9,27 @@
 </head>
 
 <div id="home">
-  <div class="container">
-    <div class="row">
+  <div id="gallery">
+  <img class="photo" id="img-gallery" src="" alt="">
+  <img class="photo hide" id="load-logo" src="" alt="">
+
+</div>  
+
+
+
+  <div class="container show" id="loginpage">
+    <div class="row" id="loginrow">
       <div class="col-8 offset-2">
-        <h2>Subscription Box</h2>
-        <form class="clearfix mb-4" action=""> <!--Put POST back here later-->
+
+        <form class="clearfix mb-4" id="form" action=""> <!--Put POST back here later-->
+
+          <img id="boxlogo" src="https://i.imgur.com/Qn7cc5a.png">
           <div class="form-group">
-            <label for="login">Login</label>
+            <label for="login">LOGIN</label>
             <input type="text" id="login" class="email-input form-control" aria-describedby="login" placeholder="Enter Login">
           </div>
           <div class="form-group">
-            <label for="password">Password</label>
+            <label for="password">PASSWORD</label>
             <input type="text" id="password" class="password form-control" aria-describedby="password" placeholder="Enter Password"></textarea>
           </div>
           <button id="submit" class="log-in btn btn-primary float-right">Login</button>
