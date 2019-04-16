@@ -71,31 +71,35 @@ $("#submit").on("click", function(event){
     firebase.auth().signInWithEmailAndPassword(email, password)
         .then(function(user){
             console.log(user)
+            window.location.href = "/test"  
         })
         .catch(function(err){
             console.log(err)
         })
 });
 
+var uid = [];
+var currentUid = {};
+var userObject = {};
+
 firebase.auth().onAuthStateChanged(function(user){
     if (user){
+        uid.push(user.uid)
         console.log(user);
+        console.log(user.uid)
+        currentUid = user.uid;
+        userObject = user;
+
     } else {
         console.log("No user!")
     }
-});
+})
 
-// //Utilizing front end
-// //Password must be at least 6 characters long
-// $(".log-in").on("click", function(event){
-//     event.preventDefault();
-
-//     var email = $(".email-input").val(); 
-//     var password = $(".password").val();
-//     userFetchData(email);
-//     userUpdate(email, password);
-//     userLogin(email, password);
-// })
+// Returns as string in array
+var testuid = function(){
+    console.log(uid);
+}
+setTimeout(testuid, 4000)
 
 
 
@@ -110,48 +114,6 @@ firebase.auth().onAuthStateChanged(function(user){
 //     });
 // }
 
-// var userLogin = function(){
-//     firebase.auth().signInWithEmailAndPassword(email, password).catch(function(err) {
-//         // var errorCode = err.code;
-//         // var errorMessage = err.message;
-//         if (err) throw err;
-//         console.log(`User ${email} signed in successfully.`)
-//     });
-// }
-
-// //Create new user
-// var createNewUser = function(){
-//     admin.auth().createUser({
-//         email: newEmail,
-//         emailVerified: false,
-//         phoneNumber: "",
-//         password: newPassword,
-//         displayName: "",
-//         photoURL: "",
-//         disabled: false
-//     }).then(function(userRecord) {
-//         console.log("Successfully created new user: ", userRecord.uid);
-//     }).catch(function(err){
-//         console.log("Error creating new user: ", err)
-//     });
-// }
-
-// //Update user
-// var userUpdate = function(){
-//     admin.auth().updateUser({
-//         email: emailInput,
-//         emailVerified: false,
-//         phoneNumber: "",
-//         password: passwordInput,
-//         displayName: "John Doe",
-//         photoURL: "",
-//         disabled: false
-//     }).then(function(userRecord) {
-//         console.log("Successfully updated new user: ", userRecord.uid);
-//     }).catch(function(err){
-//         console.log("Error updating new user: ", err)
-//     });
-// }
 
 // //Delete user
 // // admin.auth().deleteUser(uid)
