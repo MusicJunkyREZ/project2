@@ -1,8 +1,10 @@
+
 // $(document).click(function (event) {
 //   $(‘.hide’).fadeOut();
 //   $(‘.show’).show(“slow”);
 
 // });
+
 
 $(document).ready(function() {
 // Get references to page elements
@@ -110,11 +112,16 @@ function increaseProduct(event){
 
 }
  function updateQuantity(posts) {
+  const dataObj = {
+    id: posts.id,
+    quantity: posts.quantity,
+    uid: firebase.auth().currentUser.uid
+  }
    console.log("whoo");
    $.ajax({
      method: "PUT",
      url:"/api/post",
-     data: posts
+     data: dataObj
    })
    .then(function(){
     //  console.log(posts);
@@ -124,7 +131,6 @@ function increaseProduct(event){
    })
  }
 });
-
 function decreaseProduct(event){
   event.stopPropagation();
   var id = $(this).data("id");
@@ -147,11 +153,18 @@ function decreaseProduct(event){
 }
 
   function updateDecQuantity(posts) {
+    const dataObj = {
+      id: posts.id,
+      quantity: posts.quantity,
+      box: boxId,
+      userId: firebase.auth().currentUser.user.uid
+    }
+    console.log(dataObj);
     console.log("whoo");
     $.ajax({
       method: "PUT",
       url:"/api/post",
-      data: posts
+      data: dataObj
     })
     .then(function(){
      //  console.log(posts);
@@ -160,3 +173,4 @@ function decreaseProduct(event){
       console.log("update");
     })
   }
+

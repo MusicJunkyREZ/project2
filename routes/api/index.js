@@ -11,4 +11,7 @@ router.route("/post")
 router.route("/posts/:id")
   .delete(controller.delete);
 
+router.route("/box")
+  .get(controller.findAllBoxes)
+
 module.exports = router;

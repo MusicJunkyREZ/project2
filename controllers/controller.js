@@ -28,7 +28,15 @@ module.exports = {
                 
             }).then(function(updated) {
             res.json(updated);
-            console.log("1");
+        })
+    },
+    findAllBoxes: function (req, res){
+        
+        db.Box.findAll({
+            include: [db.Post],
+            where: uid
+        }).then(function (posts) {
+            res.json(posts);
         })
     }
 };
