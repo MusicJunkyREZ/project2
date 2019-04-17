@@ -14,4 +14,6 @@ router.route("/posts/:id")
 router.route("/box")
   .get(controller.findAllBoxes)
 
+router.route("/boxes/:userId")
+  .get(controller.findBoxesByUserId)
 module.exports = router;
