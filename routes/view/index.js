@@ -13,7 +13,6 @@ router.get("/api/post", function(req, res){
     db.Post.findAll().then(function(posts){
         res.json(posts);
     })
-    
 })
 // This is a placeholder/test page
 router.get("/test", function (req, res){

@@ -1,8 +1,6 @@
 var imgs = ["https://i.imgur.com/H95Y1Eu.jpg", "https://i.imgur.com/ipAkG5n.jpg", "https://i.imgur.com/3EyFOWx.jpg","https://i.imgur.com/xBgM0k4.jpg","https://i.imgur.com/myYS2sh.jpg","https://i.imgur.com/F88Tfj7.jpg","https://i.imgur.com/zaGLLTC.jpg","https://i.imgur.com/FZqI7nj.jpg","https://i.imgur.com/xQbXeqJ.jpg","https://i.imgur.com/78ytynN.jpg","https://i.imgur.com/NYUcfcG.jpg","https://i.imgur.com/x3dO5PE.jpg","https://i.imgur.com/E5FKzqn.jpg"];
 var imgURL = imgs[Math.floor(imgs.length * Math.random())];
 
-
-
 // $(document).click(function (event) {
 //   $(‘.hide’).fadeOut();
 //   $(‘.show’).show(“slow”);
@@ -19,36 +17,36 @@ var $submitBtn = $("#submit");
 var $postList = $("#post-list");
 
 $(document).on("click", ".delete", deleteProduct);
-$(document).on("click", ".increase", increaseProduct);
-$(document).on("click", ".decrease", decreaseProduct);
+$(document).on("click", ".increase", updateQuantity);
+$(document).on("click", ".decrease", decreaseQuantity);
 
 $("#img-gallery").attr("src", imgURL);
 $("#load-logo").attr("src", "https://i.imgur.com/6Zl1yGv.png");
 
 // The API object contains methods for each kind of request we'll make
-var API = {
-  savepost: function(post) {
-    return $.ajax({
-      headers: {
-        "Content-Type": "application/json"
-      },
-      type: "POST",
-      url: "api/posts",
-      data: JSON.stringify(post)
-    });
-  },
-  getposts: function() {
-    return $.ajax({
-      url: "api/posts",
-      type: "GET"
-    });
-  },
-  deletepost: function(id) {
-    return $.ajax({
-      url: "api/posts/" + id,
-      type: "DELETE"
-    });
-  }};
+// var API = {
+//   savepost: function(post) {
+//     return $.ajax({
+//       headers: {
+//         "Content-Type": "application/json"
+//       },
+//       type: "POST",
+//       url: "api/posts",
+//       data: JSON.stringify(post)
+//     });
+//   },
+//   getposts: function() {
+//     return $.ajax({
+//       url: "api/posts",
+//       type: "GET"
+//     });
+//   },
+//   deletepost: function(id) {
+//     return $.ajax({
+//       url: "api/posts/" + id,
+//       type: "DELETE"
+//     });
+//   }};
 
 
 
@@ -65,7 +63,7 @@ function refreshPosts() {
       $.get(`/api/boxes/${userId}`, function(data){
         posts = data;
         console.log("Posts:" , posts);
-        // initializePackage();   
+        initializePackage();   
       });
     }
 })
@@ -75,13 +73,15 @@ function refreshPosts() {
 function initializePackage() {
   $postList.empty();
   var rowsToAdd = [];
-  for (var i = 0; i < posts.length; i++) {
-    rowsToAdd.push(createNewRow(posts[i]));    
+  var postData = posts[0].Posts;
+  for (var i = 0; i < postData.length; i++) {
+    rowsToAdd.push(createNewRow(postData[i]));    
   }
 $postList.prepend(rowsToAdd);
 }
 
 function createNewRow(post) {
+  console.log(post);
   var $newInputRow = $(
     [
       "<li class='list-group-item product'>",
@@ -96,8 +96,14 @@ function createNewRow(post) {
     ].join("")
   );
   $newInputRow.find("button.delete").data("id", post.id);
+
   $newInputRow.find("button.decrease").data("id", post.id);
+  $newInputRow.find("button.decrease").data("quantity", post.quantity);
+  $newInputRow.find("button.decrease").data("boxId", post.BoxId);
+
   $newInputRow.find("button.increase").data("id", post.id);
+  $newInputRow.find("button.increase").data("quantity", post.quantity);
+  $newInputRow.find("button.increase").data("boxId", post.BoxId);
 
   return $newInputRow;
 }
@@ -113,85 +119,91 @@ function deleteProduct(event) {
   }).then(refreshPosts);
 }
 
-function increaseProduct(event){
-  event.stopPropagation();
-  var id = $(this).data("id");
-  console.log("The" + id);
-  console.log(posts);
-  $.get("/api/post", function(data) {
-    for (var i = 0; i < posts.length; i++) {
-      // console.log("This" + posts[i].id);
-     if (id === posts[i].id) {
-        posts[i].quantity ++;
-        console.log(posts[i].quantity);
-        console.log(posts[i]);
-        updateQuantity(posts[i]);
-        return;
+// function increaseProduct(event){
+//   event.stopPropagation();
+//   var id = $(this).data("id");
+//   console.log("The" + id);
+//   console.log(posts);
+//   $.get("/api/post", function(data) {
+//     for (var i = 0; i < posts.length; i++) {
+//       // console.log("This" + posts[i].id);
+//      if (id === posts[i].id) {
+//         posts[i].quantity ++;
+//         console.log(posts[i].quantity);
+//         console.log(posts[i]);
+//         updateQuantity(posts[i]);
+//         return;
     
 
-     } 
-    }
-  });
+//      } 
+//     }
+//   });
 
-}
+// }
 
- function updateQuantity(posts) {
+ function updateQuantity(e) {
+  e.preventDefault();
+  console.log('Clicked!');
+  console.log('Get ID: ', $(this).data('id'))
+  console.log('Get UserId: ', firebase.auth().currentUser.uid);
+  console.log(this);
+  console.log('Get Quantity', $(this).data('quantity'));
+
+
   const dataObj = {
-    id: posts.id,
-    quantity: posts.quantity,
+    boxId: $(this).data('boxId'),
+    postId: $(this).data('id'),
+    quantity: $(this).data('quantity') + 1,
     uid: firebase.auth().currentUser.uid
   }
-   console.log("whoo");
+
+  console.log('Data Obj: ', dataObj);
+
    $.ajax({
      method: "PUT",
      url:"/api/post",
      data: dataObj
    })
    .then(function(){
-    //  console.log(posts);
-    //  refreshPosts();
+     console.log(posts);
+     refreshPosts();
     location.reload();
      console.log("update");
    })
- }
-});
-function decreaseProduct(event){
-  event.stopPropagation();
-  var id = $(this).data("id");
-  $.get("/api/post", function(data) {
-    for (var i = 0; i < posts.length; i++) {
-      // console.log("This" + posts[i].id);
-     if (id === posts[i].id) {
-        posts[i].quantity --;
-        console.log(posts[i].quantity);
-        console.log(posts[i]);
-        updateDecQuantity(posts[i]);
-        return;
+ };
 
-     } 
-    }
-  });
+function decreaseQuantity(e) {
+  e.preventDefault();
+  console.log('Clicked!');
+  console.log('Get ID: ', $(this).data('id'))
+  console.log('Get UserId: ', firebase.auth().currentUser.uid);
+  console.log(this);
+  console.log('Get Quantity', $(this).data('quantity'));
 
+
+  const dataObj = {
+    boxId: $(this).data('boxId'),
+    postId: $(this).data('id'),
+    quantity: $(this).data('quantity') - 1,
+    uid: firebase.auth().currentUser.uid
+  }
+  console.log('Data Obj: ', dataObj);
+
+  $.ajax({
+    method: "PUT",
+    url:"/api/post",
+    data: dataObj
+  })
+  .then(function(){
+    console.log(posts);
+    refreshPosts();
+   location.reload();
+    console.log("update");
+  })
 }
 
-  function updateDecQuantity(posts) {
-    const dataObj = {
-      id: posts.id,
-      quantity: posts.quantity,
-      box: boxId,
-      userId: firebase.auth().currentUser.uid
-    }
-    console.log(dataObj);
-    console.log("whoo");
-    $.ajax({
-      method: "PUT",
-      url:"/api/post",
-      data: dataObj
-    })
-    .then(function(){
-     //  console.log(posts);
-     //  refreshPosts();
-     location.reload();
-      console.log("update");
-    })
-  }
+});
+
+$(".test-btn").on("click", function() {
+  window.location.href = "/confirm"
+});

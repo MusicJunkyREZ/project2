@@ -3,8 +3,7 @@ html {
 }
 
 body {
-  min-width: 100%;
-  color: white; 
+  min-width: 100%; 
 }
 
 * {
@@ -60,6 +59,22 @@ body {
 #form{
   font-size: 20px;
 }
+
+*  {
+  background: white;
+}
+
+.list-group-item {
+    line-height: 2.5;
+  }
+  
+ #piggyWrapper{
+   background: #25274D;
+ }
+
+ h2 {
+   padding-top: 100px;
+ }
 
 
 #blacklogo {
