@@ -1,3 +1,65 @@
+html {
+  width: 100%;
+}
+
+body {
+  min-width: 100%;
+  color: white; 
+}
+
+* {
+  font-family: 'Courier New', Courier, monospace;
+  box-sizing: border-box;
+  
+}
+
+.photo  {
+  width: 100%;
+  height: auto; 
+  max-height: 100%;  
+  position: absolute;
+  margin:auto;
+  top:0;
+  bottom:0;
+  left:0;
+  right:0;
+  }
+
+.list-group-item {
+    line-height: 2.5;
+}
+
+.show{
+  display: none;
+}
+
+#loginpage{
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -50px;
+  width: 100px;
+  height: 100px;
+}
+
+#boxlogo {
+  max-width: 250px;
+  max-height: 250px;
+}
+#loginrow{
+  width: 500px; 
+}
+
+#submit {
+  background-color:white;
+  color: navy;
+}
+
+#form{
+  font-size: 20px;
+}
+=======
 *  {
   background: white;
 }
