@@ -42,11 +42,11 @@ body {
   height: 100px;
 }
 
-#whitelogo {
+/* #whitelogo {
   max-width: 250px;
   max-height: 250px;
   margin-left: 30px;
-}
+} */
 #loginrow{
   width: 500px; 
 }
