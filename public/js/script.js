@@ -63,9 +63,9 @@ function refreshPosts() {
     if (user){
       var userId = firebase.auth().currentUser.uid;
       $.get(`/api/boxes/${userId}`, function(data){
-        posts = data;
-        console.log("Posts:" , posts);
-        // initializePackage();   
+        boxes = data;
+        console.log("Posts:" , boxes);
+        initializePackage();   
       });
     }
 })
@@ -75,18 +75,22 @@ function refreshPosts() {
 function initializePackage() {
   $postList.empty();
   var rowsToAdd = [];
-  for (var i = 0; i < posts.length; i++) {
-    rowsToAdd.push(createNewRow(posts[i]));    
+  for (var i = 0; i < boxes.length; i++) {
+    rowsToAdd.push(createNewRow(boxes[i]));  
+    console.log(boxes);
+    console.log(boxes[i]);  
   }
 $postList.prepend(rowsToAdd);
 }
 
-function createNewRow(post) {
+function createNewRow(box) {
+  for(var i = 0; i < box.Posts.length; i++) {
+    console.log(box)
   var $newInputRow = $(
     [
       "<li class='list-group-item product'>",
       "<span>",
-      "ID:" + (post.id) + " | " + (post.product_name) +  " | Quantity: " + post.quantity,
+      "ID:" + (box.Posts[i].id) + " | " + (box.product_name) +  " | Quantity: " + box.quantity,
       "</span>",
       "<input type='string' class='edit' style='display: none;'>",
       "<button class='delete btn float-right'>x</button>",
@@ -95,10 +99,10 @@ function createNewRow(post) {
       "</li>"
     ].join("")
   );
-  $newInputRow.find("button.delete").data("id", post.id);
-  $newInputRow.find("button.decrease").data("id", post.id);
-  $newInputRow.find("button.increase").data("id", post.id);
-
+  $newInputRow.find("button.delete").data("id", (box.id));
+  $newInputRow.find("button.decrease").data("id", box.id);
+  $newInputRow.find("button.increase").data("id", box.id);
+  }
   return $newInputRow;
 }
 
