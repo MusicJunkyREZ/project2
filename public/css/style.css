@@ -94,3 +94,18 @@ body {
   min-height: 100%; 
   width: 60%;
 }
+
+.signuplink {
+  color: white;
+  margin-left: 60px; 
+}
+
+#myInput{
+  color: black; 
+
+}
+
+#comingsoon{
+  max-width: 450px;
+  padding: 30px 0px;
+}
