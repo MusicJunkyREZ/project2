@@ -3,6 +3,13 @@ var imgURL = imgs[Math.floor(imgs.length * Math.random())];
 
 
 
+// $(document).click(function (event) {
+//   $(‘.hide’).fadeOut();
+//   $(‘.show’).show(“slow”);
+
+// });
+
+
 $(document).ready(function() {
 // Get references to page elements
 
@@ -52,10 +59,17 @@ $(document).click(function (event) {
 
 // refreshposts gets new posts from the db and repopulates the list
 function refreshPosts() {
-  $.get("api/post", function(data){
-    posts = data;
-    initializePackage();   
-  });
+  firebase.auth().onAuthStateChanged(function(user){
+    if (user){
+      var userId = firebase.auth().currentUser.uid;
+      $.get(`/api/boxes/${userId}`, function(data){
+        posts = data;
+        console.log("Posts:" , posts);
+        // initializePackage();   
+      });
+    }
+})
+ 
 }
 
 function initializePackage() {
@@ -122,11 +136,16 @@ function increaseProduct(event){
 }
 
  function updateQuantity(posts) {
+  const dataObj = {
+    id: posts.id,
+    quantity: posts.quantity,
+    uid: firebase.auth().currentUser.uid
+  }
    console.log("whoo");
    $.ajax({
      method: "PUT",
      url:"/api/post",
-     data: posts
+     data: dataObj
    })
    .then(function(){
     //  console.log(posts);
@@ -135,9 +154,44 @@ function increaseProduct(event){
      console.log("update");
    })
  }
+});
+function decreaseProduct(event){
+  event.stopPropagation();
+  var id = $(this).data("id");
+  $.get("/api/post", function(data) {
+    for (var i = 0; i < posts.length; i++) {
+      // console.log("This" + posts[i].id);
+     if (id === posts[i].id) {
+        posts[i].quantity --;
+        console.log(posts[i].quantity);
+        console.log(posts[i]);
+        updateDecQuantity(posts[i]);
+        return;
 
-function decreaseProduct(event) {
-  post.quantity--;
+     } 
+    }
+  });
+
 }
 
-});
+  function updateDecQuantity(posts) {
+    const dataObj = {
+      id: posts.id,
+      quantity: posts.quantity,
+      box: boxId,
+      userId: firebase.auth().currentUser.uid
+    }
+    console.log(dataObj);
+    console.log("whoo");
+    $.ajax({
+      method: "PUT",
+      url:"/api/post",
+      data: dataObj
+    })
+    .then(function(){
+     //  console.log(posts);
+     //  refreshPosts();
+     location.reload();
+      console.log("update");
+    })
+  }

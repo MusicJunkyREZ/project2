@@ -52,6 +52,7 @@ $("#sign-up-btn").on("click", function(event){
     firebase.auth().createUserWithEmailAndPassword(newEmail, newPassword)
         .then(function(user){
             console.log(user)
+            window.location.href = "/newUser"  
         })
         .catch(function(err){
             console.log(err);
@@ -75,8 +76,19 @@ $("#submit").on("click", function(event){
         })
         .catch(function(err){
             console.log(err)
+            alert("That email, password, or both don't exist. Try again.")
         })
 });
+
+$("#logout").on("click", function(event){
+    event.preventDefault();
+    firebase.auth().signOut()
+    .then(function(user) {
+        (console.log("user signed out"));
+        window.location.href = "/"
+    })
+   
+})
 
 var uid = [];
 var currentUid = {};
@@ -101,7 +113,10 @@ var testuid = function(){
 }
 setTimeout(testuid, 4000)
 
-
+$('.test-btn').click(function() {
+    var user = firebase.auth().currentUser;
+    console.log(user.id);
+})
 
 // var userFetchData = function(){
 //     //Retrieve user data using email
