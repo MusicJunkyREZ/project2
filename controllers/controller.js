@@ -31,12 +31,22 @@ module.exports = {
         })
     },
     findAllBoxes: function (req, res){
-        
+
         db.Box.findAll({
             include: [db.Post],
             where: uid
         }).then(function (posts) {
             res.json(posts);
+        })
+    },
+    findBoxesByUserId: function(req, res){
+        db.Box.findAll({
+            where:{ 
+                userId: req.params.userId
+            },
+            include: [db.Post]
+        }).then (function(boxes){
+            res.json(boxes);
         })
     }
 };
