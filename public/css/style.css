@@ -43,9 +43,10 @@ body {
   height: 100px;
 }
 
-#boxlogo {
+#whitelogo {
   max-width: 250px;
   max-height: 250px;
+  margin-left: 30px;
 }
 #loginrow{
   width: 500px; 
@@ -59,32 +60,22 @@ body {
 #form{
   font-size: 20px;
 }
-=======
-*  {
-  background: white;
+
+
+#blacklogo {
+  max-height: 150px;
+  max-width: 150px;
+  margin: 5px auto 15px auto;
+  display: block;
+  
 }
 
-.list-group-item {
-    line-height: 2.5;
-  }
-  
- #piggyWrapper{
-   background: #25274D;
- }
-
- h2 {
-   padding-top: 100px;
- }
-
- img {
-   width: 600px;
-   height: auto;
- }
-
- #submit.log-in.btb{
-   background: #2E9CCA;
- }
-
- #sign-up-btn{
-  background-color: #2E9CCA;
- }
+.whitebox{
+  position: relative;
+  color: black; 
+  background-color: white;
+  margin: 100px auto;
+  padding: 30px 10px;
+  min-height: 100%; 
+  width: 60%;
+}
