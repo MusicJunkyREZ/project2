@@ -21,7 +21,7 @@ $(document).on("click", ".increase", updateQuantity);
 $(document).on("click", ".decrease", decreaseQuantity);
 
 $("#img-gallery").attr("src", imgURL);
-$("#load-logo").attr("src", "https://i.imgur.com/8qNyPIY.png");
+$("#load-logo").attr("src", "https://i.imgur.com/6Zl1yGv.png");
 
 // The API object contains methods for each kind of request we'll make
 // var API = {
