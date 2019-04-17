@@ -3,7 +3,8 @@ html {
 }
 
 body {
-  min-width: 100%; 
+  min-width: 100%;
+  color: white; 
 }
 
 * {
@@ -42,11 +43,11 @@ body {
   height: 100px;
 }
 
-/* #whitelogo {
+#whitelogo {
   max-width: 250px;
   max-height: 250px;
   margin-left: 30px;
-} */
+}
 #loginrow{
   width: 500px; 
 }
@@ -59,22 +60,6 @@ body {
 #form{
   font-size: 20px;
 }
-
-*  {
-  background: white;
-}
-
-.list-group-item {
-    line-height: 2.5;
-  }
-  
- #piggyWrapper{
-   background: #25274D;
- }
-
- h2 {
-   padding-top: 100px;
- }
 
 
 #blacklogo {
