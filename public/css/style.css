@@ -3,8 +3,7 @@ html {
 }
 
 body {
-  min-width: 100%;
-  color: white; 
+  min-width: 100%; 
 }
 
 * {
@@ -59,7 +58,8 @@ body {
 #form{
   font-size: 20px;
 }
-=======
+======= 
+/* ^For some reason if this is erased then there is a white box around the login */
 *  {
   background: white;
 }

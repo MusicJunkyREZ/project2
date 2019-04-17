@@ -87,8 +87,17 @@ $("#logout").on("click", function(event){
         (console.log("user signed out"));
         window.location.href = "/"
     })
-   
 })
+
+$("#confirm").on("click", function(event){
+    event.preventDefault()
+        window.location.href = "/confirm"
+});
+
+$("#dashboard").on("click", function(event){
+    event.preventDefault()
+        window.location.href = "/test"
+});
 
 var uid = [];
 var currentUid = {};

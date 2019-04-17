@@ -22,9 +22,10 @@ module.exports = {
         });
     },
     update: function (req, res) {
+        console.log(req.body);
         db.Post.update({quantity: req.body.quantity},
             {
-                where: {id: req.body.id}
+                where: {id: req.body.postId}
                 
             }).then(function(updated) {
             res.json(updated);
@@ -33,8 +34,7 @@ module.exports = {
     findAllBoxes: function (req, res){
 
         db.Box.findAll({
-            include: [db.Post],
-            where: uid
+            include: [db.Post]
         }).then(function (posts) {
             res.json(posts);
         })
