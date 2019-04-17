@@ -43,10 +43,17 @@ var API = {
 
 // refreshposts gets new posts from the db and repopulates the list
 function refreshPosts() {
-  $.get("api/post", function(data){
-    posts = data;
-    initializePackage();   
-  });
+  firebase.auth().onAuthStateChanged(function(user){
+    if (user){
+      var userId = firebase.auth().currentUser.uid;
+      $.get(`/api/boxes/${userId}`, function(data){
+        posts = data;
+        console.log("Posts:" , posts);
+        // initializePackage();   
+      });
+    }
+})
+ 
 }
 
 function initializePackage() {
@@ -134,8 +141,6 @@ function increaseProduct(event){
 function decreaseProduct(event){
   event.stopPropagation();
   var id = $(this).data("id");
-  console.log("ID:" + id);
-  console.log(posts);
   $.get("/api/post", function(data) {
     for (var i = 0; i < posts.length; i++) {
       // console.log("This" + posts[i].id);
@@ -157,7 +162,7 @@ function decreaseProduct(event){
       id: posts.id,
       quantity: posts.quantity,
       box: boxId,
-      userId: firebase.auth().currentUser.user.uid
+      userId: firebase.auth().currentUser.uid
     }
     console.log(dataObj);
     console.log("whoo");
