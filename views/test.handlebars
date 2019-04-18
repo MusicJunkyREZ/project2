@@ -4,11 +4,9 @@
 
 </div>  
 
-<div class="container3 whitebox">
-  <div class="jumbotron mt-4">
+<div id="container3" class="whitebox">
     <h1 class="display-4 text-center">Your past packages:
     </h1>
-    <div id="logout"><button>Logout</button></div>
   </div>
   <div>
     <ul id="post-list" class="list-group">
@@ -19,6 +17,25 @@
       {{/each}}
     </ul>
     <button class="test-btn">Submit</button>
+    <div id="logout"><button>Logout</button></div>
     </p>
   </div>
+  <div class="modal fade" id="newPackage" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalScrollableTitle">Your Next Package Will Include:</h5>
+        <button type="button" id="close1" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+         <ul id="p-list" class="list-group">
+      {{#each posts}}
+      <li data-id="{{this.id}}" class="list-group-item">
+        <a href="post/{{this.id}}">{{this.text}}</a>
+      </li>
+      {{/each}}
+    </ul>
+
 </div>

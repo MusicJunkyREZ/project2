@@ -15,6 +15,7 @@ var $postText = $("#post-text");
 var $postDescription = $("#post-description");
 var $submitBtn = $("#submit");
 var $postList = $("#post-list");
+var $pList = $("#p-list");
 
 $(document).on("click", ".delete", deleteProduct);
 $(document).on("click", ".increase", updateQuantity);
@@ -23,32 +24,6 @@ $(document).on("click", ".decrease", decreaseQuantity);
 $("#img-gallery").attr("src", imgURL);
 $("#load-logo").attr("src", "https://i.imgur.com/6Zl1yGv.png");
 
-// The API object contains methods for each kind of request we'll make
-// var API = {
-//   savepost: function(post) {
-//     return $.ajax({
-//       headers: {
-//         "Content-Type": "application/json"
-//       },
-//       type: "POST",
-//       url: "api/posts",
-//       data: JSON.stringify(post)
-//     });
-//   },
-//   getposts: function() {
-//     return $.ajax({
-//       url: "api/posts",
-//       type: "GET"
-//     });
-//   },
-//   deletepost: function(id) {
-//     return $.ajax({
-//       url: "api/posts/" + id,
-//       type: "DELETE"
-//     });
-//   }};
-
-
 
 $(document).click(function (event) { 
   $('.hide').fadeOut();           
@@ -56,6 +31,55 @@ $(document).click(function (event) {
 });
 
 // refreshposts gets new posts from the db and repopulates the list
+
+function modalPosts() {
+  firebase.auth().onAuthStateChanged(function(user){
+    if (user){
+      var userId = firebase.auth().currentUser.uid;
+      $.get(`/api/boxes/${userId}`, function(data){
+        posts = data;
+        console.log("Posts:" , posts);
+        modalPackage();   
+      });
+    }
+})
+ 
+}
+function modalPackage() {
+  $pList.empty();
+  var rowsToAdd = [];
+  var postData = posts[0].Posts;
+  for (var i = 0; i < postData.length; i++) {
+    rowsToAdd.push(createNewPackage(postData[i]));    
+  }
+$pList.prepend(rowsToAdd);
+}
+function createNewPackage(post) {
+  console.log(post);
+  var $newInputRow = $(
+    [
+      "<li class='list-group-item product'>",
+      "<span>",
+      "ID:" + (post.id) + " | " + (post.product_name) +  " | Quantity: " + post.quantity,
+      "</span>",
+      "<input type='string' class='edit' style='display: none;'>",
+      "</li>"
+    ].join("")
+  );
+
+  return $newInputRow;
+}
+
+$(".test-btn").on("click", function() {
+  modalPosts();
+    $('#newPackage').modal('toggle')
+  // window.location.href = "/confirm"
+});
+$("#close1").on("click", function() {
+   window.location.href = "/confirm";
+})
+
+
 function refreshPosts() {
   firebase.auth().onAuthStateChanged(function(user){
     if (user){
@@ -119,27 +143,6 @@ function deleteProduct(event) {
   }).then(refreshPosts);
 }
 
-// function increaseProduct(event){
-//   event.stopPropagation();
-//   var id = $(this).data("id");
-//   console.log("The" + id);
-//   console.log(posts);
-//   $.get("/api/post", function(data) {
-//     for (var i = 0; i < posts.length; i++) {
-//       // console.log("This" + posts[i].id);
-//      if (id === posts[i].id) {
-//         posts[i].quantity ++;
-//         console.log(posts[i].quantity);
-//         console.log(posts[i]);
-//         updateQuantity(posts[i]);
-//         return;
-    
-
-//      } 
-//     }
-//   });
-
-// }
 
  function updateQuantity(e) {
   e.preventDefault();
@@ -202,8 +205,4 @@ function decreaseQuantity(e) {
   })
 }
 
-});
-
-$(".test-btn").on("click", function() {
-  window.location.href = "/confirm"
 });
